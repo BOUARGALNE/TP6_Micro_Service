@@ -7,7 +7,9 @@ import ma.enset.tp6_micro_services.dto.BankAccountRequestDTO;
 import ma.enset.tp6_micro_services.dto.BankAccountResponseDTO;
 import ma.enset.tp6_micro_services.entities.AccountType;
 import ma.enset.tp6_micro_services.entities.BankAccount;
+import ma.enset.tp6_micro_services.entities.Customer;
 import ma.enset.tp6_micro_services.repositories.BankAccountRepository;
+import ma.enset.tp6_micro_services.repositories.CustomerRepository;
 import ma.enset.tp6_micro_services.service.AccountService;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class BankAccountGraphQLController {
     private BankAccountRepository bankAccountRepository;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private CustomerRepository customerRepository;
     @QueryMapping
     public List<BankAccount> accountsList(){
         return bankAccountRepository.findAll();
@@ -48,5 +52,9 @@ public class BankAccountGraphQLController {
     public boolean deleteAccount(@Argument String id){
         bankAccountRepository.deleteById(id);
         return true;
+    }
+    @QueryMapping
+    public List<Customer> customers(){
+        return customerRepository.findAll();
     }
 }
